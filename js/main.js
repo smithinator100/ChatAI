@@ -123,12 +123,14 @@ Promise.all([
 // Handle chat toggle functionality
 document.addEventListener('DOMContentLoaded', () => {
     const prototypeToggle = document.getElementById('prototype-toggle');
+    const thumbnailsToggle = document.getElementById('thumbnails-toggle');
     const existingChat = document.querySelector('.existing-chat');
     const placeholderChat = document.querySelector('.placeholder-chat');
     const container = document.querySelector('.container');
     const titleTextDefault = document.querySelector('.title-text--default');
     const titleTextActive = document.querySelector('.title-text--active');
     const subtitleText = document.querySelector('.subtitle-text');
+    const thumbnails = document.querySelector('.thumbnails');
 
     // Set initial state
     existingChat.style.opacity = '0';
@@ -136,6 +138,24 @@ document.addEventListener('DOMContentLoaded', () => {
     titleTextDefault.style.opacity = '1';
     titleTextActive.style.opacity = '0';
     subtitleText.style.opacity = '0';
+    thumbnailsToggle.checked = true;
+    
+    // Add initial staggered animation for thumbnails
+    requestAnimationFrame(() => {
+        thumbnails.classList.add('expand');
+        // After height animation, show content
+        setTimeout(() => {
+            thumbnails.classList.add('show');
+            // Animate individual thumbnails after container animation
+            setTimeout(() => {
+                document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                    setTimeout(() => {
+                        thumb.classList.add('show');
+                    }, index * 100); // Stagger each thumbnail by 100ms
+                });
+            }, 200); // Wait for container animation to be mostly complete
+        }, 0); // Wait for height animation
+    });
 
     prototypeToggle.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -152,6 +172,41 @@ document.addEventListener('DOMContentLoaded', () => {
             titleTextActive.style.opacity = '0';
             subtitleText.style.opacity = '0';
             container.classList.remove('existing-chat-active');
+        }
+    });
+
+    thumbnailsToggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            // Start expand animation immediately
+            requestAnimationFrame(() => {
+                thumbnails.classList.add('expand');
+                // After height animation, show content
+                setTimeout(() => {
+                    thumbnails.classList.add('show');
+                    // Animate individual thumbnails after container animation
+                    setTimeout(() => {
+                        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                            setTimeout(() => {
+                                thumb.classList.add('show');
+                            }, index * 100); // Stagger each thumbnail by 100ms
+                        });
+                    }, 200); // Wait for container animation to be mostly complete
+                }, 300); // Wait for height animation
+            });
+        } else {
+            // Remove all thumbnails at once
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('show');
+            });
+            
+            // After thumbnails are hidden, fade out container
+            setTimeout(() => {
+                thumbnails.classList.remove('show');
+                // After container fade, collapse height
+                setTimeout(() => {
+                    thumbnails.classList.remove('expand');
+                }, 0);
+            }, 0);
         }
     });
 });
