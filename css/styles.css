@@ -120,7 +120,6 @@ p {
     width: 90%;
     max-width: 1200px;
     margin: 50px auto;
-    padding: 24px;
     border-radius: 12px;
     box-shadow: var(--container-shadow);
     height: calc(100vh - 100px);
@@ -138,11 +137,14 @@ p {
 .drag-bg {
     position: absolute;
     inset: 0;
-    background-color: transparent;
+    background-color: rgba(235, 241, 255, 0.97);
     z-index: 1;
     border-radius: 12px;
     opacity: 1;
     transition: var(--transition-transform);
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .dotted-border {
@@ -162,32 +164,46 @@ p {
 .chat-content {
     width: 100%;
     height: 100%;
-    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     transition: var(--transition-transform);
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    box-sizing: border-box;
 }
 
-.chat-stack {
+.chat-overlay {
     display: flex;
     max-width: 856px;
-    padding: 0 40px;
+    padding: 0;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: stretch;
     gap: 0;
     flex: 1 0 0;
     align-self: stretch;
     margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    width: 100%;
+    z-index: 2;
 }
 
 .placeholder-chat {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .lottie-wrapper {
@@ -206,7 +222,7 @@ p {
     display: block;
     position: absolute;
     top: 18px;
-    left: 180px;
+    left: 190px;
     transform: translateX(-50%) !important;
     z-index: 1001;
     pointer-events: none;
@@ -223,6 +239,8 @@ p {
     align-self: stretch;
     width: 100%;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .input {
@@ -238,6 +256,70 @@ p {
     background: var(--sds-dc-color-layer2);
     width: 100%;
     transition: var(--transition-transform);
+}
+
+.existing-chat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0px;
+    width: 100%;
+    min-height: 100%;
+    max-width:890px;
+    padding: 24px 40px;
+    overflow-y: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.user-chat, .duck-chat {
+    color: var(--sds-color-text-01);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+
+.user-chat {
+    background-color: #F3F6FF;
+    margin-left: auto;
+    width: 100%;
+    position: relative;
+    border-radius: 8px 0 8px 8px;
+}
+
+.user-chat::after {
+    content: '';
+    position: absolute;
+    top: 1;
+    right: -11px;
+    width: 12px;
+    height: 21px;
+    background-image: url('../img/bubble-ear.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateY(-50%);
+}
+
+.duck-chat {
+    margin-right: auto;
+    width: 100%;
+}
+
+.duck-chat ol {
+    margin-left: 24px;
+}
+
+.duck-chat ol li {
+    padding-left: 8px;
 }
 
 /* Utility Classes */
@@ -260,10 +342,6 @@ p {
 
 /* Active States */
 body:active .container {
-    .drag-bg {
-        background-color: #EBF1FF;
-        scale: var(--drag-scale);
-    }
 
     .dotted-border {
         opacity: 1;
@@ -288,4 +366,5 @@ body:active .container {
     .subtitle-text {
         opacity: 1;
     }
-} 
+}
+

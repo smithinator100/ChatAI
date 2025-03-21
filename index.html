@@ -19,18 +19,41 @@
 </head>
 <body>
 <div class="container">
-    <div class="drag-bg dotted-border"></div>
+ 
     <div class="chat-content">
-        <div class="chat-stack">
+
+        <div class="existing-chat">
+            <div class="user-chat">Tell me 3 jokes about ducks</div>
+            <div class="duck-chat">
+                <div class="model-name"><img src="img/GPT-4o mini.svg" alt="duck-logo"></div>
+                <p>Sure, here are five dark humor jokes involving ducks:</p>
+                <ol>
+                    <li>Why did the duck cross the road?<br>
+                    To prove he wasn’t chicken... but he didn’t make it.</li>
+                    <li>What do you call a duck that’s been hit by a car?<br>
+                    A quack-up.</li>
+                    <li>Why don’t ducks tell secrets in the pond?<br>
+                    Because the fish might be listening... and they have a way of making things disappear.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="drag-bg dotted-border"></div>
+
+        <div class="chat-overlay">
+
             <div class="placeholder-chat">
-                <div id="logo-to-plus-lottie" class="lottie-wrapper"></div>
-                <div id="arrow-lottie" class="arrow-lottie-wrapper"></div>
+                <div id="logo-to-plus-lottie" class="lottie-wrapper">
+                    <div id="arrow-lottie" class="arrow-lottie-wrapper"></div>
+                </div>
+
                 <h4 class="logo-title">
                     <span class="title-text title-text--default">Duck.ai</span>
                     <span class="title-text title-text--active">Drop your image here</span>
                     <span class="subtitle-text">Max 5 images per chat up to 10mb each</span>
                 </h4>
             </div>
+
         </div>
         <div class="chat-input">
             <div class="input">
