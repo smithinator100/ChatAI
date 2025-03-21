@@ -46,9 +46,37 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #FAFAFA;
+    margin: 0;
+    padding: 0;
+}
+
+/* Prototype Layout */
+.prototype {
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding-top: 80px;
+}
+
+.sidebar-content {
+    padding: var(--sds-space-x10);
+    height: 100%;
+}
+
+.sidebar-header {
+    margin-bottom: var(--sds-space-x10);
+}
+
+.sidebar-header h3 {
+    font-size: 18px;
+    font-weight: 700;
 }
 
 /* Make spans unselectable */
@@ -75,6 +103,7 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
 }
 
 .title-text {
@@ -116,10 +145,11 @@ p {
 
 /* Layout Components */
 .container {
+    flex: 1;
     background-color: white;
-    width: 90%;
+    width: calc(100% - 100px);
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 50px;
     border-radius: 12px;
     box-shadow: var(--container-shadow);
     height: calc(100vh - 100px);
@@ -203,7 +233,9 @@ p {
     transform: translate(-50%, -50%);
     width: 100%;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .lottie-wrapper {
@@ -272,7 +304,8 @@ p {
     box-sizing: border-box;
     position: absolute;
     inset: 0;
-    z-index: 0;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .user-chat, .duck-chat {
@@ -284,7 +317,6 @@ p {
     margin-bottom: 8px;
     padding: 12px 16px;
     border-radius: 8px;
-    max-width: 80%;
 }
 
 .user-chat {
@@ -293,6 +325,7 @@ p {
     width: 100%;
     position: relative;
     border-radius: 8px 0 8px 8px;
+    max-width: 80%;
 }
 
 .user-chat::after {
@@ -320,6 +353,7 @@ p {
 
 .duck-chat ol li {
     padding-left: 8px;
+    margin-bottom: 8px;
 }
 
 /* Utility Classes */
@@ -341,8 +375,7 @@ p {
 }
 
 /* Active States */
-body:active .container {
-
+.container:active {
     .dotted-border {
         opacity: 1;
     }
@@ -366,5 +399,73 @@ body:active .container {
     .subtitle-text {
         opacity: 1;
     }
+}
+
+/* Toggle Switch Styles */
+.toggle-control {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.toggle-label {
+    font-size: 14px;
+    color: #000000;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #3969EF;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #3969EF;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 

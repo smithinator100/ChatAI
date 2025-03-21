@@ -18,49 +18,67 @@
     <script src="js/main.js"></script>
 </head>
 <body>
-<div class="container">
- 
-    <div class="chat-content">
 
-        <div class="existing-chat">
-            <div class="user-chat">Tell me 3 jokes about ducks</div>
-            <div class="duck-chat">
-                <div class="model-name"><img src="img/GPT-4o mini.svg" alt="duck-logo"></div>
-                <p>Sure, here are five dark humor jokes involving ducks:</p>
-                <ol>
-                    <li>Why did the duck cross the road?<br>
-                    To prove he wasn’t chicken... but he didn’t make it.</li>
-                    <li>What do you call a duck that’s been hit by a car?<br>
-                    A quack-up.</li>
-                    <li>Why don’t ducks tell secrets in the pond?<br>
-                    Because the fish might be listening... and they have a way of making things disappear.</li>
-                </ol>
+<div class="prototype">
+    <div id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <h3>Prototype</h3>
+                <div class="toggle-control">
+                    <label class="switch">
+                        <input type="checkbox" id="prototype-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">Existing Chat</span>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="drag-bg dotted-border"></div>
+    <div class="container">
+ 
+        <div class="chat-content">
 
-        <div class="chat-overlay">
+            <div class="existing-chat">
+                <div class="user-chat">Tell me 3 jokes about ducks</div>
+                <div class="duck-chat">
+                    <div class="model-name"><img src="img/GPT-4o mini.svg" alt="duck-logo"></div>
+                    <p>Sure, here are five dark humor jokes involving ducks:</p>
+                    <ol>
+                        <li>Why did the duck cross the road?<br>
+                        To prove he wasn't chicken... but he didn't make it.</li>
+                        <li>What do you call a duck that's been hit by a car?<br>
+                        A quack-up.</li>
+                        <li>Why don't ducks tell secrets in the pond?<br>
+                        Because the fish might be listening... and they have a way of making things disappear.</li>
+                    </ol>
+                </div>
+            </div>
 
-            <div class="placeholder-chat">
-                <div id="logo-to-plus-lottie" class="lottie-wrapper">
-                    <div id="arrow-lottie" class="arrow-lottie-wrapper"></div>
+            <div class="drag-bg dotted-border"></div>
+
+            <div class="chat-overlay">
+
+                <div class="placeholder-chat">
+                    <div id="logo-to-plus-lottie" class="lottie-wrapper">
+                        <div id="arrow-lottie" class="arrow-lottie-wrapper"></div>
+                    </div>
+
+                    <h4 class="logo-title">
+                        <span class="title-text title-text--default">Duck.ai</span>
+                        <span class="title-text title-text--active">Drop your image here</span>
+                        <span class="subtitle-text">Max 5 images per chat up to 10mb each</span>
+                    </h4>
                 </div>
 
-                <h4 class="logo-title">
-                    <span class="title-text title-text--default">Duck.ai</span>
-                    <span class="title-text title-text--active">Drop your image here</span>
-                    <span class="subtitle-text">Max 5 images per chat up to 10mb each</span>
-                </h4>
             </div>
-
-        </div>
-        <div class="chat-input">
-            <div class="input">
-                <p>Chat with GPT-4o</p>
-            </div>
-            <div class="disclaimer">
-                <p>You are chatting with GPT-4o. AI chats may display inaccurate or offensive information.</p>
+            <div class="chat-input">
+                <div class="input">
+                    <p>Chat with GPT-4o</p>
+                </div>
+                <div class="disclaimer">
+                    <p>You are chatting with GPT-4o. AI chats may display inaccurate or offensive information.</p>
+                </div>
             </div>
         </div>
     </div>
