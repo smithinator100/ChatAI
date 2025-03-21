@@ -29,14 +29,14 @@ function setupMouseEvents(animation, arrowAnimation) {
             arrowAnimation.play();
         }
 
-        // Show placeholder chat and update text when mouse down if toggle is on
+        // Update text states on mouse down
         if (prototypeToggle.checked) {
             placeholderChat.style.opacity = '1';
-            titleTextDefault.style.opacity = '0';
-            titleTextActive.style.opacity = '1';
-            subtitleText.style.opacity = '1';
             container.classList.add('existing-chat-active');
         }
+        titleTextDefault.style.opacity = '0';
+        titleTextActive.style.opacity = '1';
+        subtitleText.style.opacity = '1';
     };
 
     const playReverse = () => {
@@ -48,12 +48,17 @@ function setupMouseEvents(animation, arrowAnimation) {
         arrowAnimation.goToAndStop(arrowAnimation.totalFrames, true);
         arrowAnimation.play();
 
-        // Hide placeholder chat and restore text when mouse up if toggle is on
+        // Update text states on mouse up
         if (prototypeToggle.checked) {
             placeholderChat.style.opacity = '0';
+            container.classList.remove('existing-chat-active');
             titleTextDefault.style.opacity = '0';
             titleTextActive.style.opacity = '1';
             subtitleText.style.opacity = '1';
+        } else {
+            titleTextDefault.style.opacity = '1';
+            titleTextActive.style.opacity = '0';
+            subtitleText.style.opacity = '0';
         }
     };
 
@@ -128,6 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial state
     existingChat.style.opacity = '0';
     placeholderChat.style.opacity = '1';
+    titleTextDefault.style.opacity = '1';
+    titleTextActive.style.opacity = '0';
+    subtitleText.style.opacity = '0';
 
     prototypeToggle.addEventListener('change', (e) => {
         if (e.target.checked) {

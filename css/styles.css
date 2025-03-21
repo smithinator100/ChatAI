@@ -25,6 +25,7 @@
     --sds-dc-color-border1: rgba(0, 0, 0, 0.18);
     --sds-dc-color-layer2: rgba(255, 255, 255, 0.84);
     --sds-color-text-04: rgba(0, 0, 0, 0.45);
+    --sds-dc-text-secondary: rgba(0, 0, 0, 0.54);
     --drag-scale: 0.93;
     --transition-transform: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     --container-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
@@ -59,7 +60,7 @@ body {
 
 /* Sidebar Styles */
 #sidebar {
-    width: 240px;
+    width: 300px;
     flex-shrink: 0;
     overflow-y: auto;
     padding-top: 80px;
@@ -372,6 +373,21 @@ p {
 
 .text-center {
     text-align: center;
+}
+
+.secondary-text {
+    color: var(--sds-dc-text-secondary);
+}
+
+.instructions{
+    color: var(--sds-dc-text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    width: 100%;
+    text-align: left;
+    margin: 12px 0px 24px 0px;
+
 }
 
 /* Active States */
