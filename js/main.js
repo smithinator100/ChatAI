@@ -138,25 +138,15 @@ document.addEventListener('DOMContentLoaded', () => {
     titleTextDefault.style.opacity = '1';
     titleTextActive.style.opacity = '0';
     subtitleText.style.opacity = '0';
-    thumbnailsToggle.checked = true;
+    thumbnailsToggle.checked = false;
     
-    // Add initial staggered animation for thumbnails
-    requestAnimationFrame(() => {
-        thumbnails.classList.add('expand');
-        // After height animation, show content
-        setTimeout(() => {
-            thumbnails.classList.add('show');
-            // Animate individual thumbnails after container animation
-            setTimeout(() => {
-                document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-                    setTimeout(() => {
-                        thumb.classList.add('show');
-                    }, index * 100); // Stagger each thumbnail by 100ms
-                });
-            }, 200); // Wait for container animation to be mostly complete
-        }, 0); // Wait for height animation
+    // Add initial state for thumbnails (collapsed)
+    thumbnails.classList.remove('expand');
+    thumbnails.classList.remove('show');
+    document.querySelectorAll('.thumbnail').forEach(thumb => {
+        thumb.classList.remove('show');
     });
-
+    
     prototypeToggle.addEventListener('change', (e) => {
         if (e.target.checked) {
             existingChat.style.opacity = '1';
@@ -188,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
                             setTimeout(() => {
                                 thumb.classList.add('show');
-                            }, index * 100); // Stagger each thumbnail by 100ms
+                            }, index * 80); // Stagger each thumbnail by 100ms
                         });
                     }, 200); // Wait for container animation to be mostly complete
                 }, 300); // Wait for height animation
