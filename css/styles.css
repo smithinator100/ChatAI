@@ -1,4 +1,35 @@
-/* Custom Fonts */
+/* ==========================================================================
+   Base Styles & CSS Variables
+   ========================================================================== */
+:root {
+    /* Spacing */
+    --sds-space-x02: 8px;
+    --sds-space-x04: 16px;
+    --sds-space-x10: 40px;
+    
+    /* Colors */
+    --sds-color-accent: #3969EF;
+    --sds-dc-color-border1: rgba(0, 0, 0, 0.18);
+    --sds-dc-color-layer2: rgba(255, 255, 255, 0.84);
+    --sds-color-text-04: rgba(0, 0, 0, 0.45);
+    --sds-dc-text-secondary: rgba(0, 0, 0, 0.54);
+    
+    /* Layout */
+    --sds-radius-x04: 16px;
+    --drag-scale: 0.93;
+    --container-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
+    
+    /* Typography */
+    --font-stack: 'Proxima Nova', 'Open Sans', sans-serif;
+    
+    /* Animations */
+    --transition-transform: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --thumbnail-transition-in: transform 0.5s cubic-bezier(0.1, 0.77, 0.37, 1.13);
+}
+
+/* ==========================================================================
+   Font Definitions
+   ========================================================================== */
 @font-face {
     font-family: 'Proxima Nova';
     src: url('../fonts/proximanova-regular.otf') format('opentype');
@@ -15,32 +46,15 @@
     font-display: block;
 }
 
-/* CSS Variables */
-:root {
-    --sds-space-x02: 8px;
-    --sds-space-x04: 16px;
-    --sds-space-x10: 40px;
-    --sds-radius-x04: 16px;
-    --sds-color-accent: #3969EF;
-    --sds-dc-color-border1: rgba(0, 0, 0, 0.18);
-    --sds-dc-color-layer2: rgba(255, 255, 255, 0.84);
-    --sds-color-text-04: rgba(0, 0, 0, 0.45);
-    --sds-dc-text-secondary: rgba(0, 0, 0, 0.54);
-    --drag-scale: 0.93;
-    --transition-transform: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    --container-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
-    --font-stack: 'Proxima Nova', 'Open Sans', sans-serif;
-    --thumbnail-transition-in: transform 0.5s cubic-bezier(0.1, 0.77, 0.37, 1.13);;
-}
-
-/* Modern CSS Reset */
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Base Styles */
 body {
     min-height: 100vh;
     font-family: var(--font-stack);
@@ -52,7 +66,17 @@ body {
     padding: 0;
 }
 
-/* Prototype Layout */
+/* Make spans unselectable */
+span {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
 .prototype {
     display: flex;
     min-height: 100vh;
@@ -63,7 +87,25 @@ body {
     position: relative;
 }
 
-/* Sidebar Styles */
+.container {
+    flex: 2;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: var(--container-shadow);
+    height: calc(100vh - 48px);
+    min-height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: var(--transition-transform);
+}
+
+/* ==========================================================================
+   Sidebar Styles
+   ========================================================================== */
 #sidebar {
     flex: 1;
     flex-shrink: 0;
@@ -87,15 +129,9 @@ body {
     font-weight: 700;
 }
 
-/* Make spans unselectable */
-span {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-/* Typography */
+/* ==========================================================================
+   Typography & Text Styles
+   ========================================================================== */
 .logo-title {
     font-size: 24px;
     font-weight: 700;
@@ -128,7 +164,7 @@ span {
     left: 50%;
     transform: translateX(-50%);
     top: 32px;
-    color: var(--sds-dc-text-secondary, rgba(0, 0, 0, 0.36));
+    color: var(--sds-dc-text-secondary);
     text-align: center;
     font-size: 16px;
     font-style: normal;
@@ -136,7 +172,7 @@ span {
     line-height: 24px;
     white-space: nowrap;
     opacity: 0;
-    transition: var(--transition-transform)
+    transition: var(--transition-transform);
 }
 
 .title-text--default {
@@ -151,51 +187,9 @@ p {
     margin-bottom: 1.2em;
 }
 
-/* Layout Components */
-.container {
-    flex: 2;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: var(--container-shadow);
-    height: calc(100vh - 48px);
-    min-height: auto;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: var(--transition-transform);
-}
-
-/* Drag and Drop Components */
-.drag-bg {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(235, 241, 255, 0.97);
-    z-index: 1;
-    border-radius: 12px;
-    opacity: 1;
-    transition: var(--transition-transform);
-    pointer-events: none;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-.dotted-border {
-    opacity: 0;
-    background-image: 
-        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
-        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
-        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
-        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px);
-    background-position: left top, right top, left bottom, left top;
-    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
-    background-size: 14.5px 2.5px, 2.5px 14.5px, 14.5px 2.5px, 2.5px 14.5px;
-    border-radius: 12px;
-}
-
-/* Chat Components */
+/* ==========================================================================
+   Chat Components
+   ========================================================================== */
 .chat-content {
     width: 100%;
     height: 100%;
@@ -243,57 +237,6 @@ p {
     transition: opacity 0.3s ease-in-out;
 }
 
-.lottie-wrapper {
-    width: 128px;
-    height: 96px;
-    display: block;
-    margin: 0 auto 0px;
-    position: relative;
-    z-index: 1000;
-    transform: none !important;
-}
-
-.arrow-lottie-wrapper {
-    width: 112px;
-    height: 88px;
-    display: block;
-    position: absolute;
-    top: 18px;
-    left: 190px;
-    transform: translateX(-50%) !important;
-    z-index: 1001;
-    pointer-events: none;
-}
-
-/* Input Components */
-.chat-input {
-    display: flex;
-    max-width: 890px;
-    padding: var(--sds-space-x02) var(--sds-space-x10) var(--sds-space-x02) var(--sds-space-x10);
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    align-self: stretch;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.input {
-    display: flex;
-    padding: var(--sds-radius-x04);
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    flex: 1 0 0;
-    border-radius: var(--sds-radius-x04);
-    border: 2px solid var(--sds-dc-color-border1);
-    background: var(--sds-dc-color-layer2);
-    width: 100%;
-    transition: var(--transition-transform);
-}
-
 .existing-chat {
     display: flex;
     flex-direction: column;
@@ -301,7 +244,7 @@ p {
     gap: 0px;
     width: 100%;
     min-height: 100%;
-    max-width:890px;
+    max-width: 890px;
     padding: 24px 40px;
     overflow-y: auto;
     margin: 0 auto;
@@ -312,6 +255,7 @@ p {
     transition: opacity 0.3s ease-in-out;
 }
 
+/* Chat Messages */
 .user-chat, .duck-chat {
     color: var(--sds-color-text-01);
     font-size: 16px;
@@ -360,67 +304,176 @@ p {
     margin-bottom: 8px;
 }
 
-/* Utility Classes */
-.disclaimer {
-    color: var(--sds-color-text-04);
-    text-align: center;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 12px;
+/* ==========================================================================
+   Input Components
+   ========================================================================== */
+.chat-input {
+    display: flex;
+    max-width: 890px;
+    padding: var(--sds-space-x02) var(--sds-space-x10) var(--sds-space-x02) var(--sds-space-x10);
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
     width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
-.disclaimer p {
-    margin-bottom: 0;
+.input {
+    display: flex;
+    padding: var(--sds-radius-x04);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1 0 0;
+    border-radius: var(--sds-radius-x04);
+    border: 2px solid var(--sds-dc-color-border1);
+    background: var(--sds-dc-color-layer2);
+    width: 100%;
+    transition: var(--transition-transform);
 }
 
-.text-center {
-    text-align: center;
-}
-
-.secondary-text {
+.input-text {
     color: var(--sds-dc-text-secondary);
-}
-
-.instructions{
-    color: var(--sds-dc-text-secondary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 18px;
     width: 100%;
     text-align: left;
-    margin: 12px 0px 24px 0px;
-
 }
 
-/* Active States */
-.container:active {
-    .dotted-border {
-        opacity: 1;
-    }
-
-    .chat-content {
-        transform: scale(var(--drag-scale));
-    }
-
-    .input {
-        border-color: var(--sds-color-accent);
-    }
-
-    .title-text--default {
-        opacity: 0;
-    }
-
-    .title-text--active {
-        opacity: 1;
-    }
-
-    .subtitle-text {
-        opacity: 1;
-    }
+/* ==========================================================================
+   Drag and Drop Components
+   ========================================================================== */
+.drag-bg {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(235, 241, 255, 0.97);
+    z-index: 1;
+    border-radius: 12px;
+    opacity: 1;
+    transition: var(--transition-transform);
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
-/* Toggle Switch Styles */
+.dotted-border {
+    opacity: 0;
+    background-image: 
+        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
+        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
+        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px),
+        radial-gradient(circle, #7496f4 1.25px, transparent 1.25px);
+    background-position: left top, right top, left bottom, left top;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    background-size: 14.5px 2.5px, 2.5px 14.5px, 14.5px 2.5px, 2.5px 14.5px;
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   Animation Components
+   ========================================================================== */
+.lottie-wrapper {
+    width: 128px;
+    height: 96px;
+    display: block;
+    margin: 0 auto 0px;
+    position: relative;
+    z-index: 1000;
+    transform: none !important;
+}
+
+.arrow-lottie-wrapper {
+    width: 112px;
+    height: 88px;
+    display: block;
+    position: absolute;
+    top: 18px;
+    left: 190px;
+    transform: translateX(-50%) !important;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Thumbnail Components
+   ========================================================================== */
+.thumbnails {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: left;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.0);
+    height: 0px;
+    pointer-events: none;
+    transition: height 0.3s ease-out;
+}
+
+.thumbnails.expand {
+    height: 80px;
+    padding-top: 16px;
+    pointer-events: auto;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, height 0.3s ease-out;
+}
+
+.thumbnails.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.thumbnail {
+    display: flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10), 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    border: 3px solid #FFF;
+    position: relative;
+    transform: scale(0);
+    transition: none;
+    will-change: transform;
+}
+
+.thumbnail.show {
+    transform: scale(1);
+    transition: var(--thumbnail-transition-in);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.thumbnail::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background-image: url('../img/remove.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   Toggle Switch Components
+   ========================================================================== */
 .toggle-control {
     display: flex;
     align-items: center;
@@ -488,82 +541,66 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-.thumbnails {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    align-items: left;
-    justify-content: center;
-    opacity: 0;
-    transform: scale(0.0);
-    height: 0px;
-    pointer-events: none;
-    transition: height 0.3s ease-out;
-}
-
-.thumbnails.expand {
-    height: 80px;
-    padding-top:16px;
-    pointer-events: auto;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out, height 0.3s ease-out;
-}
-
-.thumbnails.show {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.thumbnail {
-    display: flex;
-    width: 56px;
-    height: 56px;
-    align-items: center;
-    flex-shrink: 0;
-    aspect-ratio: 1/1;
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.10), 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
-    border: 3px solid #FFF;
-    position: relative;
-    transform: scale(0);
-    transition: none;
-    will-change: transform;
-}
-
-.thumbnail.show {
-    transform: scale(1);
-    transition: var(--thumbnail-transition-in);
-}
-
-.thumbnail img {
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+.disclaimer {
+    color: var(--sds-color-text-04);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    overflow: hidden;
-    border-radius: 16px;
 }
 
-.thumbnail::after {
-    content: '';
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 24px;
-    height: 24px;
-    background-image: url('../img/remove.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: pointer;
-    z-index: 1;
+.disclaimer p {
+    margin-bottom: 0;
 }
 
-.input-text{
+.text-center {
+    text-align: center;
+}
+
+.secondary-text {
     color: var(--sds-dc-text-secondary);
-    font-size: 16px;
+}
+
+.instructions {
+    color: var(--sds-dc-text-secondary);
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     width: 100%;
     text-align: left;
+    margin: 12px 0px 24px 0px;
+}
+
+/* ==========================================================================
+   Active States
+   ========================================================================== */
+.container:active {
+    .dotted-border {
+        opacity: 1;
+    }
+
+    .chat-content {
+        transform: scale(var(--drag-scale));
+    }
+
+    .input {
+        border-color: var(--sds-color-accent);
+    }
+
+    .title-text--default {
+        opacity: 0;
+    }
+
+    .title-text--active {
+        opacity: 1;
+    }
+
+    .subtitle-text {
+        opacity: 1;
+    }
 }
 

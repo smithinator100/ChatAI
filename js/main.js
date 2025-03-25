@@ -1,154 +1,140 @@
-let animation;
-let arrowAnimation;
+// Animation Management
+class AnimationManager {
+    constructor() {
+        this.animation = null;
+        this.arrowAnimation = null;
+    }
 
-// Handle mouse events
-function setupMouseEvents(animation, arrowAnimation) {
-    const container = document.querySelector('.container');
-    const existingChat = document.querySelector('.existing-chat');
-    const placeholderChat = document.querySelector('.placeholder-chat');
-    const prototypeToggle = document.getElementById('prototype-toggle');
-    const titleTextDefault = document.querySelector('.title-text--default');
-    const titleTextActive = document.querySelector('.title-text--active');
-    const subtitleText = document.querySelector('.subtitle-text');
-    
-    const playForward = () => {
-        animation.setDirection(1);
-        animation.goToAndStop(0, true);
-        animation.play();
+    async initialize() {
+        try {
+            const [logoData, arrowData] = await Promise.all([
+                fetch('lottie/logo-to-plus.json').then(response => response.json()),
+                fetch('lottie/arrow.json').then(response => response.json())
+            ]);
+
+            this.setupAnimations(logoData, arrowData);
+            return true;
+        } catch (error) {
+            console.error('Error loading Lottie data:', error);
+            return false;
+        }
+    }
+
+    setupAnimations(logoData, arrowData) {
+        const logoContainer = document.getElementById('logo-to-plus-lottie');
+        const arrowContainer = document.getElementById('arrow-lottie');
         
-        // Delay arrow animation by 100ms if toggle is on
-        if (prototypeToggle.checked) {
-            setTimeout(() => {
-                arrowAnimation.setDirection(1);
-                arrowAnimation.goToAndStop(0, true);
-                arrowAnimation.play();
-            }, 100);
-        } else {
-            arrowAnimation.setDirection(1);
-            arrowAnimation.goToAndStop(0, true);
-            arrowAnimation.play();
-        }
+        this.animation = lottie.loadAnimation({
+            container: logoContainer,
+            renderer: 'html',
+            loop: false,
+            autoplay: false,
+            animationData: logoData,
+            rendererSettings: {
+                clearCanvas: true,
+                progressiveLoad: true,
+                preserveAspectRatio: 'xMidYMid meet'
+            }
+        });
 
-        // Update text states on mouse down
-        if (prototypeToggle.checked) {
-            placeholderChat.style.opacity = '1';
-            container.classList.add('existing-chat-active');
-        }
-        titleTextDefault.style.opacity = '0';
-        titleTextActive.style.opacity = '1';
-        subtitleText.style.opacity = '1';
-    };
+        this.arrowAnimation = lottie.loadAnimation({
+            container: arrowContainer,
+            renderer: 'html',
+            loop: false,
+            autoplay: false,
+            animationData: arrowData,
+            rendererSettings: {
+                clearCanvas: true,
+                progressiveLoad: true,
+                preserveAspectRatio: 'xMidYMid meet'
+            }
+        });
 
-    const playReverse = () => {
-        animation.setDirection(-1);
-        animation.goToAndStop(animation.totalFrames, true);
-        animation.play();
+        this.setInitialState();
+    }
+
+    setInitialState() {
+        const speed = 1.6;
+        this.animation.setSpeed(speed);
+        this.arrowAnimation.setSpeed(speed);
+
+        this.animation.setDirection(1);
+        this.animation.goToAndStop(0, true);
         
-        arrowAnimation.setDirection(-1);
-        arrowAnimation.goToAndStop(arrowAnimation.totalFrames, true);
-        arrowAnimation.play();
+        this.arrowAnimation.setDirection(1);
+        this.arrowAnimation.goToAndStop(0, true);
+    }
 
-        // Update text states on mouse up
+    playForward(prototypeToggle) {
+        this.animation.setDirection(1);
+        this.animation.goToAndStop(0, true);
+        this.animation.play();
+        
         if (prototypeToggle.checked) {
-            placeholderChat.style.opacity = '0';
-            container.classList.remove('existing-chat-active');
-            titleTextDefault.style.opacity = '0';
-            titleTextActive.style.opacity = '1';
-            subtitleText.style.opacity = '1';
+            setTimeout(() => this.playArrowForward(), 100);
         } else {
-            titleTextDefault.style.opacity = '1';
-            titleTextActive.style.opacity = '0';
-            subtitleText.style.opacity = '0';
+            this.playArrowForward();
         }
-    };
+    }
 
-    // Mouse events
-    container.addEventListener('mousedown', playForward);
-    container.addEventListener('mouseup', playReverse);
+    playReverse() {
+        this.animation.setDirection(-1);
+        this.animation.goToAndStop(this.animation.totalFrames, true);
+        this.animation.play();
+        
+        this.arrowAnimation.setDirection(-1);
+        this.arrowAnimation.goToAndStop(this.arrowAnimation.totalFrames, true);
+        this.arrowAnimation.play();
+    }
+
+    playArrowForward() {
+        this.arrowAnimation.setDirection(1);
+        this.arrowAnimation.goToAndStop(0, true);
+        this.arrowAnimation.play();
+    }
 }
 
-// Load the Lottie animation data
-Promise.all([
-    fetch('lottie/logo-to-plus.json').then(response => response.json()),
-    fetch('lottie/arrow.json').then(response => response.json())
-])
-.then(([logoData, arrowData]) => {
-    const logoContainer = document.getElementById('logo-to-plus-lottie');
-    const arrowContainer = document.getElementById('arrow-lottie');
-    
-    animation = lottie.loadAnimation({
-        container: logoContainer,
-        renderer: 'html',
-        loop: false,
-        autoplay: false,
-        animationData: logoData,
-        rendererSettings: {
-            clearCanvas: true,
-            progressiveLoad: true,
-            preserveAspectRatio: 'xMidYMid meet'
-        }
-    });
+// UI State Management
+class UIStateManager {
+    constructor() {
+        this.elements = {
+            container: document.querySelector('.container'),
+            existingChat: document.querySelector('.existing-chat'),
+            placeholderChat: document.querySelector('.placeholder-chat'),
+            prototypeToggle: document.getElementById('prototype-toggle'),
+            titleTextDefault: document.querySelector('.title-text--default'),
+            titleTextActive: document.querySelector('.title-text--active'),
+            subtitleText: document.querySelector('.subtitle-text'),
+            thumbnailsToggle: document.getElementById('thumbnails-toggle'),
+            thumbnails: document.querySelector('.thumbnails')
+        };
+    }
 
-    arrowAnimation = lottie.loadAnimation({
-        container: arrowContainer,
-        renderer: 'html',
-        loop: false,
-        autoplay: false,
-        animationData: arrowData,
-        rendererSettings: {
-            clearCanvas: true,
-            progressiveLoad: true,
-            preserveAspectRatio: 'xMidYMid meet'
-        }
-    });
+    setInitialState() {
+        this.elements.existingChat.style.opacity = '0';
+        this.elements.placeholderChat.style.opacity = '1';
+        this.elements.titleTextDefault.style.opacity = '1';
+        this.elements.titleTextActive.style.opacity = '0';
+        this.elements.subtitleText.style.opacity = '0';
+        this.elements.thumbnailsToggle.checked = false;
+        
+        this.elements.thumbnails.classList.remove('expand', 'show');
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.classList.remove('show');
+        });
+    }
 
-    // Set playback speed
-    animation.setSpeed(1.6);
-    arrowAnimation.setSpeed(1.6);
+    updateUIState(isPrototypeActive) {
+        const {
+            existingChat,
+            placeholderChat,
+            titleTextDefault,
+            titleTextActive,
+            subtitleText,
+            container
+        } = this.elements;
 
-    // Set initial state
-    animation.setDirection(1);
-    animation.goToAndStop(0, true);
-    
-    arrowAnimation.setDirection(1);
-    arrowAnimation.goToAndStop(0, true);
-
-    // Setup mouse events
-    setupMouseEvents(animation, arrowAnimation);
-})
-.catch(error => {
-    console.error('Error loading Lottie data:', error);
-});
-
-// Handle chat toggle functionality
-document.addEventListener('DOMContentLoaded', () => {
-    const prototypeToggle = document.getElementById('prototype-toggle');
-    const thumbnailsToggle = document.getElementById('thumbnails-toggle');
-    const existingChat = document.querySelector('.existing-chat');
-    const placeholderChat = document.querySelector('.placeholder-chat');
-    const container = document.querySelector('.container');
-    const titleTextDefault = document.querySelector('.title-text--default');
-    const titleTextActive = document.querySelector('.title-text--active');
-    const subtitleText = document.querySelector('.subtitle-text');
-    const thumbnails = document.querySelector('.thumbnails');
-
-    // Set initial state
-    existingChat.style.opacity = '0';
-    placeholderChat.style.opacity = '1';
-    titleTextDefault.style.opacity = '1';
-    titleTextActive.style.opacity = '0';
-    subtitleText.style.opacity = '0';
-    thumbnailsToggle.checked = false;
-    
-    // Add initial state for thumbnails (collapsed)
-    thumbnails.classList.remove('expand');
-    thumbnails.classList.remove('show');
-    document.querySelectorAll('.thumbnail').forEach(thumb => {
-        thumb.classList.remove('show');
-    });
-    
-    prototypeToggle.addEventListener('change', (e) => {
-        if (e.target.checked) {
+        if (isPrototypeActive) {
             existingChat.style.opacity = '1';
             placeholderChat.style.opacity = '0';
             titleTextDefault.style.opacity = '0';
@@ -163,40 +149,97 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitleText.style.opacity = '0';
             container.classList.remove('existing-chat-active');
         }
-    });
+    }
 
-    thumbnailsToggle.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            // Start expand animation immediately
-            requestAnimationFrame(() => {
-                thumbnails.classList.add('expand');
-                // After height animation, show content
-                setTimeout(() => {
-                    thumbnails.classList.add('show');
-                    // Animate individual thumbnails after container animation
-                    setTimeout(() => {
-                        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-                            setTimeout(() => {
-                                thumb.classList.add('show');
-                            }, index * 80); // Stagger each thumbnail by 100ms
-                        });
-                    }, 200); // Wait for container animation to be mostly complete
-                }, 300); // Wait for height animation
-            });
+    handleThumbnailsToggle(isExpanded) {
+        const { thumbnails } = this.elements;
+        
+        if (isExpanded) {
+            this.expandThumbnails();
         } else {
-            // Remove all thumbnails at once
-            document.querySelectorAll('.thumbnail').forEach(thumb => {
-                thumb.classList.remove('show');
-            });
-            
-            // After thumbnails are hidden, fade out container
-            setTimeout(() => {
-                thumbnails.classList.remove('show');
-                // After container fade, collapse height
-                setTimeout(() => {
-                    thumbnails.classList.remove('expand');
-                }, 0);
-            }, 0);
+            this.collapseThumbnails();
         }
-    });
-});
+    }
+
+    expandThumbnails() {
+        const { thumbnails } = this.elements;
+        
+        requestAnimationFrame(() => {
+            thumbnails.classList.add('expand');
+            setTimeout(() => {
+                thumbnails.classList.add('show');
+                setTimeout(() => {
+                    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                        setTimeout(() => thumb.classList.add('show'), index * 80);
+                    });
+                }, 200);
+            }, 300);
+        });
+    }
+
+    collapseThumbnails() {
+        const { thumbnails } = this.elements;
+        
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+            thumb.classList.remove('show');
+        });
+        
+        setTimeout(() => {
+            thumbnails.classList.remove('show');
+            setTimeout(() => thumbnails.classList.remove('expand'), 0);
+        }, 0);
+    }
+}
+
+// Event Handler
+class EventHandler {
+    constructor(animationManager, uiStateManager) {
+        this.animationManager = animationManager;
+        this.uiStateManager = uiStateManager;
+    }
+
+    setupEventListeners() {
+        const { container, prototypeToggle, thumbnailsToggle } = this.uiStateManager.elements;
+
+        // Mouse events
+        container.addEventListener('mousedown', () => {
+            this.animationManager.playForward(prototypeToggle);
+            if (prototypeToggle.checked) {
+                this.uiStateManager.updateUIState(true);
+            }
+        });
+
+        container.addEventListener('mouseup', () => {
+            this.animationManager.playReverse();
+            if (prototypeToggle.checked) {
+                this.uiStateManager.updateUIState(true);
+            } else {
+                this.uiStateManager.updateUIState(false);
+            }
+        });
+
+        // Toggle events
+        prototypeToggle.addEventListener('change', (e) => {
+            this.uiStateManager.updateUIState(e.target.checked);
+        });
+
+        thumbnailsToggle.addEventListener('change', (e) => {
+            this.uiStateManager.handleThumbnailsToggle(e.target.checked);
+        });
+    }
+}
+
+// Initialize application
+async function initializeApp() {
+    const animationManager = new AnimationManager();
+    const uiStateManager = new UIStateManager();
+    
+    await animationManager.initialize();
+    uiStateManager.setInitialState();
+    
+    const eventHandler = new EventHandler(animationManager, uiStateManager);
+    eventHandler.setupEventListeners();
+}
+
+// Start the application when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeApp);

@@ -1,66 +1,68 @@
-# HTML5 CSS Boilerplate
+# Duck.ai Drag & Drop Interface
 
-A modern, responsive HTML5 and CSS boilerplate to kickstart your web projects.
+A modern, interactive web interface prototype for Duck.ai featuring smooth animations and drag-and-drop functionality.
 
 ## Features
 
-- HTML5 semantic structure
-- Modern CSS reset
-- Responsive design with mobile-first approach
-- Flexbox-based layouts
-- Utility classes for common styling needs
-- Basic JavaScript functionality
-- Smooth scrolling for anchor links
-- Google Fonts integration
-- Open Graph meta tags for social media sharing
+- Interactive drag-and-drop interface with visual feedback
+- Smooth Lottie animations for logo and arrow transitions
+- Responsive design with modern UI components
+- Toggle controls for prototype states
+- Thumbnail preview system
+- Chat interface with user and AI message bubbles
 
-## File Structure
+## Technologies Used
+
+- HTML5
+- CSS3 (with modern features like CSS Variables and Flexbox)
+- JavaScript (ES6+)
+- Lottie Web for animations
+- Google Fonts (Open Sans)
+- Custom Proxima Nova font
+
+## Project Structure
 
 ```
-project/
-│
-├── index.html          # Main HTML file
 ├── css/
-│   └── styles.css      # Main stylesheet
+│   └── styles.css
 ├── js/
-│   └── main.js         # JavaScript functionality
-└── README.md           # This file
+│   └── main.js
+├── img/
+│   ├── ducks/
+│   ├── bubble-ear.svg
+│   └── remove.svg
+├── fonts/
+│   ├── proximanova-regular.otf
+│   └── proximanova-bold.otf
+├── lottie/
+│   ├── logo-to-plus.json
+│   └── arrow.json
+└── index.html
 ```
 
-## Usage
+## Getting Started
 
-1. Clone or download this repository
-2. Modify the HTML, CSS, and JavaScript files to fit your project needs
-3. Add your content, images, and other assets
-4. Update meta tags, title, and descriptions in the HTML file
-5. Customize the styles in the CSS file
+1. Clone the repository
+2. Open `index.html` in a modern web browser
+3. Use the prototype controls in the sidebar to test different states
+
+## Prototype Controls
+
+- **Existing Chat Toggle**: Switches between placeholder and existing chat states
+- **Thumbnails Toggle**: Shows/hides the thumbnail preview system
 
 ## Browser Support
 
-This boilerplate supports all modern browsers and includes fallbacks for older browsers where necessary.
+The interface is designed to work in modern browsers that support:
+- CSS Variables
+- Flexbox
+- ES6+ JavaScript
+- Lottie Web animations
+
+## Development
+
+The project uses vanilla JavaScript and CSS without any build tools or dependencies beyond the CDN-hosted Lottie library.
 
 ## License
 
-This project is available under the MIT License. Feel free to use, modify, and distribute as needed.
-
-## Credits
-
-Created with ❤️ by [Your Name]
-
-## Running the Application
-
-To run the application locally:
-
-1. Open a terminal in the project directory
-2. Start the development server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-3. Open your web browser and navigate to:
-   ```
-   http://localhost:8000
-   ```
-
-The application will now be running locally on your machine. You can make changes to any files and refresh your browser to see the updates.
-
-To stop the server, press `Ctrl+C` in the terminal. 
+This project is proprietary and confidential. 
