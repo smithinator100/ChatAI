@@ -23,8 +23,8 @@
     --font-stack: 'Proxima Nova', 'Open Sans', sans-serif;
     
     /* Animations */
-    --transition-transform: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    --thumbnail-transition-in: transform 0.5s cubic-bezier(0.1, 0.77, 0.37, 1.13);
+    --transition-transform: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    --thumbnail-transition-in: transform 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13);
 }
 
 /* ==========================================================================
@@ -216,7 +216,7 @@ p {
     align-self: stretch;
     margin: 0 auto;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     min-height: 0;
     width: 100%;
     z-index: 2;
@@ -232,9 +232,18 @@ p {
     transform: translate(-50%, -50%);
     width: 100%;
     pointer-events: none;
-    z-index: 2;
-    opacity: 0;
+    z-index: 3;
+    opacity: 1;
     transition: opacity 0.3s ease-in-out;
+}
+
+.existing-chat-active .placeholder-chat {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.container:active .placeholder-chat {
+    opacity: 1;
 }
 
 .existing-chat {
@@ -253,6 +262,13 @@ p {
     inset: 0;
     z-index: 1;
     transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.existing-chat-active .existing-chat {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Chat Messages */

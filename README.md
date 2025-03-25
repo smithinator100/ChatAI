@@ -1,68 +1,74 @@
 # Duck.ai Drag & Drop Interface
 
-A modern, interactive web interface prototype for Duck.ai featuring smooth animations and drag-and-drop functionality.
+A modern, interactive web interface for Duck.ai featuring smooth animations and drag-and-drop functionality for image uploads.
 
 ## Features
 
-- Interactive drag-and-drop interface with visual feedback
-- Smooth Lottie animations for logo and arrow transitions
-- Responsive design with modern UI components
-- Toggle controls for prototype states
-- Thumbnail preview system
-- Chat interface with user and AI message bubbles
+- 🎨 Beautiful Lottie animations for logo-to-plus transition
+- 💬 Interactive chat interface with existing chat and placeholder states
+- 🖼️ Thumbnail management system for uploaded images
+- 🎯 Prototype toggle controls for testing different states
+- 🎭 Smooth animations and transitions
+- 📱 Responsive design
+- 🎨 Modern UI with clean aesthetics
 
-## Technologies Used
+## Tech Stack
 
 - HTML5
-- CSS3 (with modern features like CSS Variables and Flexbox)
-- JavaScript (ES6+)
-- Lottie Web for animations
+- CSS3 (with modern features like CSS variables and transitions)
+- JavaScript (Vanilla)
+- Lottie for animations
 - Google Fonts (Open Sans)
-- Custom Proxima Nova font
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+```
+
+2. Open `index.html` in your web browser or serve it using a local server.
 
 ## Project Structure
 
 ```
+├── index.html          # Main HTML file
 ├── css/
-│   └── styles.css
+│   └── styles.css     # Main stylesheet
 ├── js/
-│   └── main.js
-├── img/
-│   ├── ducks/
-│   ├── bubble-ear.svg
-│   └── remove.svg
-├── fonts/
-│   ├── proximanova-regular.otf
-│   └── proximanova-bold.otf
-├── lottie/
+│   └── main.js        # JavaScript functionality
+├── lottie/            # Lottie animation files
 │   ├── logo-to-plus.json
 │   └── arrow.json
-└── index.html
+└── img/               # Image assets
+    ├── ducks/         # Duck images
+    └── icons/         # UI icons
 ```
 
-## Getting Started
+## Usage
 
-1. Clone the repository
-2. Open `index.html` in a modern web browser
-3. Use the prototype controls in the sidebar to test different states
+The interface features two main states:
 
-## Prototype Controls
+1. **Default State**: Shows the Duck.ai logo with a plus animation
+2. **Drag & Drop State**: Activated when dragging files, showing a dotted border and placeholder text
 
-- **Existing Chat Toggle**: Switches between placeholder and existing chat states
-- **Thumbnails Toggle**: Shows/hides the thumbnail preview system
+### Prototype Controls
+
+- **Existing Chat Toggle**: Switches between new chat and existing chat views
+- **Thumbnails Toggle**: Shows/hides the thumbnail preview section
 
 ## Browser Support
 
-The interface is designed to work in modern browsers that support:
-- CSS Variables
-- Flexbox
-- ES6+ JavaScript
-- Lottie Web animations
+The interface is built with modern web standards and is compatible with:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## Development
+## Contributing
 
-The project uses vanilla JavaScript and CSS without any build tools or dependencies beyond the CDN-hosted Lottie library.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is proprietary and confidential. 
+This project is licensed under the MIT License - see the LICENSE file for details. 
