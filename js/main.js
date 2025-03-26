@@ -16,9 +16,18 @@ function setupMouseEvents(animation, arrowAnimation) {
         animation.goToAndStop(0, true);
         animation.play();
         
-        arrowAnimation.setDirection(1);
-        arrowAnimation.goToAndStop(0, true);
-        arrowAnimation.play();
+        // Delay arrow animation by 200ms if prototype toggle is checked
+        if (prototypeToggle.checked) {
+            setTimeout(() => {
+                arrowAnimation.setDirection(1);
+                arrowAnimation.goToAndStop(0, true);
+                arrowAnimation.play();
+            }, 200);
+        } else {
+            arrowAnimation.setDirection(1);
+            arrowAnimation.goToAndStop(0, true);
+            arrowAnimation.play();
+        }
 
         // Update text states on mouse down
         if (prototypeToggle.checked) {
@@ -171,10 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
                             setTimeout(() => {
                                 thumb.classList.add('show');
-                            }, index * 80); // Stagger each thumbnail by 100ms
+                            }, index * 50); // Reduced from 80ms to 50ms for faster sequence
                         });
-                    }, 200); // Wait for container animation to be mostly complete
-                }, 300); // Wait for height animation
+                    }, 100); // Reduced from 200ms to 100ms for faster start
+                }, 150); // Reduced from 300ms to 150ms for faster expansion
             });
         } else {
             // Remove all thumbnails at once

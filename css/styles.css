@@ -25,6 +25,7 @@
     /* Animations */
     --transition-transform: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     --thumbnail-transition-in: transform 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13);
+    --thumbnail-expand-transition: opacity 0.3s ease-out, transform 0.3s ease-out, height cubic-bezier(0.1, 0.77, 0.37, 1.13);
 }
 
 /* ==========================================================================
@@ -427,14 +428,14 @@ p {
     transform: scale(0.0);
     height: 0px;
     pointer-events: none;
-    transition: height 0.3s ease-out;
+    transition: var(--thumbnail-expand-transition);
 }
 
 .thumbnails.expand {
     height: 80px;
     padding-top: 16px;
     pointer-events: auto;
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out, height 0.3s ease-out;
+    transition: var(--thumbnail-expand-transition);
 }
 
 .thumbnails.show {
