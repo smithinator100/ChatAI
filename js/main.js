@@ -1,8 +1,8 @@
 let animation;
 let arrowAnimation;
 
-// Handle mouse events
-function setupMouseEvents(animation, arrowAnimation) {
+// Handle drag events for file dropping
+function setupDragEvents(animation, arrowAnimation) {
     const container = document.querySelector('.container');
     const existingChat = document.querySelector('.existing-chat');
     const placeholderChat = document.querySelector('.placeholder-chat');
@@ -11,7 +11,12 @@ function setupMouseEvents(animation, arrowAnimation) {
     const titleTextActive = document.querySelector('.title-text--active');
     const subtitleText = document.querySelector('.subtitle-text');
     
+    // Track drag state
+    let isDraggingFile = false;
+    let dragCounter = 0;
+    
     const playForward = () => {
+        container.classList.add('drag-over');
         animation.setDirection(1);
         animation.goToAndStop(0, true);
         animation.play();
@@ -29,7 +34,7 @@ function setupMouseEvents(animation, arrowAnimation) {
             arrowAnimation.play();
         }
 
-        // Update text states on mouse down
+        // Update text states on drag enter
         if (prototypeToggle.checked) {
             container.classList.add('existing-chat-active');
             // Delay showing placeholder until animation starts
@@ -43,6 +48,7 @@ function setupMouseEvents(animation, arrowAnimation) {
     };
 
     const playReverse = () => {
+        container.classList.remove('drag-over');
         animation.setDirection(-1);
         animation.goToAndStop(animation.totalFrames, true);
         animation.play();
@@ -51,7 +57,7 @@ function setupMouseEvents(animation, arrowAnimation) {
         arrowAnimation.goToAndStop(arrowAnimation.totalFrames, true);
         arrowAnimation.play();
 
-        // Update text states on mouse up
+        // Update text states on drag leave
         if (prototypeToggle.checked) {
             // Delay hiding placeholder until animation starts
             setTimeout(() => {
@@ -68,9 +74,75 @@ function setupMouseEvents(animation, arrowAnimation) {
         }
     };
 
-    // Mouse events
-    container.addEventListener('mousedown', playForward);
-    container.addEventListener('mouseup', playReverse);
+    // Check if the drag contains files
+    function isFileDrag(e) {
+        return e.dataTransfer && e.dataTransfer.types && 
+               (e.dataTransfer.types.indexOf('Files') !== -1 || 
+                e.dataTransfer.types.indexOf('text/uri-list') !== -1);
+    }
+
+    // Add window-level drag event handlers for entering the window
+    document.addEventListener('dragenter', function(e) {
+        if (isFileDrag(e)) {
+            dragCounter++;
+            if (dragCounter === 1) {
+                isDraggingFile = true;
+                playForward();
+            }
+        }
+    });
+
+    // Prevent default to allow for drop
+    document.addEventListener('dragover', function(e) {
+        if (isFileDrag(e)) {
+            e.preventDefault();
+        }
+    });
+
+    // Handle drag leave at document level
+    document.addEventListener('dragleave', function(e) {
+        if (isFileDrag(e)) {
+            dragCounter--;
+            if (dragCounter === 0) {
+                isDraggingFile = false;
+                playReverse();
+            }
+        }
+    });
+
+    // Handle the drop
+    document.addEventListener('drop', function(e) {
+        if (isFileDrag(e)) {
+            e.preventDefault();
+            dragCounter = 0;
+            isDraggingFile = false;
+            playReverse();
+            
+            // Handle the file drop if it's on the container
+            if (container.contains(e.target) || e.target === container) {
+                const files = e.dataTransfer.files;
+                console.log('Files dropped:', files);
+            }
+        }
+    });
+
+    // Backup safety measure: reset the counter if user clicks anywhere in the document
+    document.addEventListener('mousedown', function() {
+        if (dragCounter !== 0) {
+            dragCounter = 0;
+            isDraggingFile = false;
+            playReverse();
+        }
+    });
+
+    // Backup safety measure: reset on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && dragCounter !== 0) {
+            dragCounter = 0;
+            isDraggingFile = false;
+            playReverse();
+        }
+    });
 }
 
 // Load the Lottie animation data
@@ -119,8 +191,8 @@ Promise.all([
     arrowAnimation.setDirection(1);
     arrowAnimation.goToAndStop(0, true);
 
-    // Setup mouse events
-    setupMouseEvents(animation, arrowAnimation);
+    // Setup drag events
+    setupDragEvents(animation, arrowAnimation);
 })
 .catch(error => {
     console.error('Error loading Lottie data:', error);
@@ -182,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 thumb.classList.add('show');
                             }, index * 50); // Reduced from 80ms to 50ms for faster sequence
                         });
-                    }, 100); // Reduced from 200ms to 100ms for faster start
+                    }, 50); // Reduced from 200ms to 100ms for faster start
                 }, 150); // Reduced from 300ms to 150ms for faster expansion
             });
         } else {

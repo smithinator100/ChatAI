@@ -25,7 +25,7 @@
     /* Animations */
     --transition-transform: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     --thumbnail-transition-in: transform 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13);
-    --thumbnail-expand-transition: opacity 0.3s ease-out, transform 0.3s ease-out, height cubic-bezier(0.1, 0.77, 0.37, 1.13);
+    --thumbnail-expand-transition: opacity 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13), transform 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13), height 0.3s cubic-bezier(0.1, 0.77, 0.37, 1.13);
 }
 
 /* ==========================================================================
@@ -102,6 +102,43 @@ span {
     justify-content: center;
     position: relative;
     transition: var(--transition-transform);
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Add drag and drop styles */
+.container.drag-over {
+    .dotted-border {
+        opacity: 1;
+    }
+
+    .chat-content {
+        transform: scale(var(--drag-scale));
+    }
+
+    .input {
+        border-color: var(--sds-color-accent);
+    }
+
+    .title-text--default {
+        opacity: 0;
+    }
+
+    .title-text--active {
+        opacity: 1;
+    }
+
+    .subtitle-text {
+        opacity: 1;
+    }
+}
+
+/* Remove the old active state styles completely */
+.container:active {
+    /* Remove all the old active state styles */
 }
 
 /* ==========================================================================
@@ -425,7 +462,7 @@ p {
     align-items: left;
     justify-content: center;
     opacity: 0;
-    transform: scale(0.0);
+    transform: scale(1);
     height: 0px;
     pointer-events: none;
     transition: var(--thumbnail-expand-transition);
@@ -454,14 +491,16 @@ p {
     border-radius: 16px;
     border: 3px solid #FFF;
     position: relative;
-    transform: scale(0);
+    transform: scale(0.5);
     transition: none;
     will-change: transform;
+    opacity: 0;
 }
 
 .thumbnail.show {
     transform: scale(1);
     transition: var(--thumbnail-transition-in);
+    opacity: 1;
 }
 
 .thumbnail img {
@@ -595,29 +634,8 @@ input:checked + .slider:before {
 /* ==========================================================================
    Active States
    ========================================================================== */
+/* Completely remove active state styling */
 .container:active {
-    .dotted-border {
-        opacity: 1;
-    }
-
-    .chat-content {
-        transform: scale(var(--drag-scale));
-    }
-
-    .input {
-        border-color: var(--sds-color-accent);
-    }
-
-    .title-text--default {
-        opacity: 0;
-    }
-
-    .title-text--active {
-        opacity: 1;
-    }
-
-    .subtitle-text {
-        opacity: 1;
-    }
+    /* No styles here */
 }
 
