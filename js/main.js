@@ -211,11 +211,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbnails = document.querySelector('.thumbnails');
 
     // Set initial state
-    existingChat.style.opacity = '0';
-    placeholderChat.style.opacity = '1';
-    titleTextDefault.style.opacity = '1';
-    titleTextActive.style.opacity = '0';
-    subtitleText.style.opacity = '0';
+    if (prototypeToggle.checked) {
+        existingChat.style.opacity = '1';
+        titleTextDefault.style.opacity = '0';
+        titleTextActive.style.opacity = '1';
+        subtitleText.style.opacity = '1';
+        container.classList.add('existing-chat-active');
+        placeholderChat.style.opacity = '0';
+    } else {
+        existingChat.style.opacity = '0';
+        placeholderChat.style.opacity = '1';
+        titleTextDefault.style.opacity = '1';
+        titleTextActive.style.opacity = '0';
+        subtitleText.style.opacity = '0';
+    }
     thumbnailsToggle.checked = false;
 
     prototypeToggle.addEventListener('change', (e) => {
